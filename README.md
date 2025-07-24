@@ -126,7 +126,7 @@ All ideas and bug reports are welcome.
 ## 👨‍💻 Developer
 
 Built with ❤️ in Python 3  
-Created by: [ّFarshad Sanginnezhad](https://github.com/fsanginnezhad/)
+Created by: [Farshad Sanginnezhad](https://github.com/fsanginnezhad/)
 
 ---
 
