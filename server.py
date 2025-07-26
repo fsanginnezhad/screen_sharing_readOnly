@@ -149,11 +149,13 @@ import tkinter as tk
 from tkinter import messagebox
 import random
 import string
+import json
 
 HOST = '0.0.0.0'
 PORT = 5000
-hostname = socket.gethostname()
-IP_SERVER = socket.gethostbyname(hostname)
+with open('server.config', 'r', encoding='utf-8') as file:
+    data = json.load(file)
+IP_SERVER = data['IP_SERVER']
 
 connections = {}  # key: code, value: {'viewer': conn, 'sender': conn}
 

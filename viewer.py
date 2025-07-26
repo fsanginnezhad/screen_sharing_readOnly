@@ -4,10 +4,13 @@ import tkinter as tk
 from tkinter import messagebox
 from PIL import Image, ImageTk
 import io
+import json
+
 
 class ViewerClient:
-    def __init__(self, master):
+    def __init__(self, master, ip_server):
         self.master = master
+        self.ip_server = ip_server
         self.sock = None
         self.running = False
 
@@ -21,7 +24,7 @@ class ViewerClient:
         # بخش ورودی IP
         tk.Label(master, text="IP سرور:", font=("Helvetica", 12)).pack()
         self.ip_entry = tk.Entry(master, width=30)
-        self.ip_entry.insert(0, '127.0.0.1')
+        self.ip_entry.insert(0, self.ip_server)
         self.ip_entry.pack(pady=5)
 
         # دکمه اتصال
@@ -111,7 +114,10 @@ class ViewerClient:
 
 if __name__ == "__main__":
     root = tk.Tk()
-    app = ViewerClient(root)
+    with open('file.config', 'r', encoding='utf-8') as file:
+        data = json.load(file)
+    IP_SERVER = data['IP_SERVER']
+    app = ViewerClient(root, IP_SERVER)
     root.mainloop()
 
 

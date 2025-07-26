@@ -100,10 +100,12 @@ import pyautogui
 from PIL import Image
 import io
 import time
+import json
 
 class SenderClient:
-    def __init__(self, master):
+    def __init__(self, master, ip_server):
         self.master = master
+        self.ip_server = ip_server
         self.sock = None
         self.running = False
 
@@ -112,7 +114,7 @@ class SenderClient:
 
         tk.Label(master, text="IP سرور:", font=("Helvetica", 12)).pack()
         self.ip_entry = tk.Entry(master, width=30)
-        self.ip_entry.insert(0, '127.0.0.1')
+        self.ip_entry.insert(0, self.ip_server)
         self.ip_entry.pack(pady=5)
 
         tk.Label(master, text="کد ویور:", font=("Helvetica", 12)).pack()
@@ -180,5 +182,8 @@ class SenderClient:
 
 if __name__ == "__main__":
     root = tk.Tk()
-    app = SenderClient(root)
+    with open('file.config', 'r', encoding='utf-8') as file:
+        data = json.load(file)
+    IP_SERVER = data['IP_SERVER']
+    app = SenderClient(root, IP_SERVER)
     root.mainloop()
