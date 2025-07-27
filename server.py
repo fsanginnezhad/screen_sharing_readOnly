@@ -4,13 +4,11 @@ import tkinter as tk
 from tkinter import messagebox
 import random
 import string
-import json
+from functions import file_config
 
 HOST = '0.0.0.0'
 PORT = 5000
-with open('file.config', 'r', encoding='utf-8') as file:
-    data = json.load(file)
-IP_SERVER = data['IP_SERVER']
+IP_SERVER = file_config()
 
 connections = {}
 
@@ -104,35 +102,36 @@ def go_offline():
     status_label.config(text="وضعیت: آفلاین", fg="red")
     status_label_ip.config(text="")
 
-root = tk.Tk()
-root.title("📡 سرور اشتراک صفحه")
-root.geometry("350x250")
-root.configure(bg="#f4f4f4")
+if IP_SERVER:
+    root = tk.Tk()
+    root.title("📡 سرور اشتراک صفحه")
+    root.geometry("350x250")
+    root.configure(bg="#f4f4f4")
 
-# ---- استایل ---- #
-title = tk.Label(root, text="مدیریت سرور اشتراک صفحه", font=("Segoe UI", 16, "bold"), bg="#f4f4f4")
-title.pack(pady=(20, 10))
+    # ---- استایل ---- #
+    title = tk.Label(root, text="مدیریت سرور اشتراک صفحه", font=("Segoe UI", 16, "bold"), bg="#f4f4f4")
+    title.pack(pady=(20, 10))
 
-status_label = tk.Label(root, text="وضعیت: آفلاین", fg="red", font=("Segoe UI", 12), bg="#f4f4f4")
-status_label.pack(pady=5)
+    status_label = tk.Label(root, text="وضعیت: آفلاین", fg="red", font=("Segoe UI", 12), bg="#f4f4f4")
+    status_label.pack(pady=5)
 
-btn_frame = tk.Frame(root, bg="#f4f4f4")
-btn_frame.pack(pady=10)
+    btn_frame = tk.Frame(root, bg="#f4f4f4")
+    btn_frame.pack(pady=10)
 
-online_btn = tk.Button(
-    btn_frame, text="🟢 آنلاین شدن", font=("Segoe UI", 11), width=15,
-    bg="#4CAF50", fg="white", command=go_online
-)
-online_btn.grid(row=0, column=0, padx=5)
+    online_btn = tk.Button(
+        btn_frame, text="🟢 آنلاین شدن", font=("Segoe UI", 11), width=15,
+        bg="#4CAF50", fg="white", command=go_online
+    )
+    online_btn.grid(row=0, column=0, padx=5)
 
-offline_btn = tk.Button(
-    btn_frame, text="🔴 آفلاین شدن", font=("Segoe UI", 11), width=15,
-    bg="#F44336", fg="white", command=go_offline
-)
-offline_btn.grid(row=0, column=1, padx=5)
+    offline_btn = tk.Button(
+        btn_frame, text="🔴 آفلاین شدن", font=("Segoe UI", 11), width=15,
+        bg="#F44336", fg="white", command=go_offline
+    )
+    offline_btn.grid(row=0, column=1, padx=5)
 
-status_label_ip = tk.Label(root, text="", fg="#333", font=("Segoe UI", 11), bg="#f4f4f4")
-status_label_ip.pack(pady=10)
+    status_label_ip = tk.Label(root, text="", fg="#333", font=("Segoe UI", 11), bg="#f4f4f4")
+    status_label_ip.pack(pady=10)
 
-root.protocol("WM_DELETE_WINDOW", lambda: (server.stop(), root.destroy()))
-root.mainloop()
+    root.protocol("WM_DELETE_WINDOW", lambda: (server.stop(), root.destroy()))
+    root.mainloop()

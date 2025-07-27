@@ -3,10 +3,9 @@ import threading
 import tkinter as tk
 from tkinter import messagebox
 import pyautogui
-from PIL import Image
 import io
 import time
-import json
+from functions import file_config
 
 class SenderClient:
     def __init__(self, master, ip_server):
@@ -107,9 +106,8 @@ class SenderClient:
 
 
 if __name__ == "__main__":
-    root = tk.Tk()
-    with open('file.config', 'r', encoding='utf-8') as file:
-        data = json.load(file)
-    IP_SERVER = data['IP_SERVER']
-    app = SenderClient(root, IP_SERVER)
-    root.mainloop()
+    IP_SERVER = file_config()
+    if IP_SERVER:
+        root = tk.Tk()
+        app = SenderClient(root, IP_SERVER)
+        root.mainloop()
